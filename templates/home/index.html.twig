@@ -4,14 +4,13 @@
 {% endblock %}
 
 {% block body %}
-            {% include "include/carousel.html.twig" %}
+	{% include "include/carousel.html.twig" %}
 
 	{# ARTICLE TEMPLATE #}
 
 	{# <h1 id="articles-anchor" class="text-center my-5 text-uppercase">Article récents :</h1> #}
 
-	<div class="container-fluid my-4">
-		<div class="row">
+		<div class="container-fluid my-4"> <div class="row">
 			{% for article in articles %}
 				<div class="col-lg-3 col-md-6 col-sm-12">
 					<div class="card mb-3" style="w-100;">
@@ -30,9 +29,10 @@
 							</p>
 							<a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Show</a>
 						</div>
-												<div class="card-footer">
-							{# Ici ajouter {{ article.createdAt }} #}
-							<small class="text-muted">ici : Date de création de l'article</small>
+						<div class="card-footer">
+							<small class="text-muted">Written on :
+								{{ article.CreatedAt.format('d/m/Y \\a\\t H:i:s:a') }}</small>
+
 						</div>
 					</div>
 				</div>

@@ -12,6 +12,7 @@
                 <th>Email</th>
                 <th>Roles</th>
                 <th>Password</th>
+                <th>Created at</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,7 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
+                <td>{{ user.CreatedAt.format('d/m/Y \\a\\t H:i:s a') }}</td>
                 <td>
                     <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>

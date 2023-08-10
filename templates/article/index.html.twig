@@ -46,8 +46,8 @@
 						</div>
 						<div
 							class="card-footer">
-							{# Ici ajouter {{ article.createdAt }} #}
-							<small class="text-muted">ici : Date de création de l'article</small>
+							<small class="text-muted">Written on : {{ article.CreatedAt.format('d/m/Y \\a\\t H:i:s a') }}</small>
+
 						</div>
 					</div>
 				</div>

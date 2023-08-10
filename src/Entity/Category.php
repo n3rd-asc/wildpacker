@@ -21,6 +21,9 @@ class Category
     #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'category')]
     private Collection $articles;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -73,6 +76,18 @@ class Category
         // Convertir l'objet en châine de caractères 
         public function __toString() {
             return $this->name;
+        }
+
+        public function getSlug(): ?string
+        {
+            return $this->slug;
+        }
+
+        public function setSlug(string $slug): static
+        {
+            $this->slug = $slug;
+
+            return $this;
         }
 
 }

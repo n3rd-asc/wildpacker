@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -29,9 +30,19 @@ class Article
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'articles')]
     private Collection $category;
 
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $CreatedAt = null;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
+        $this->CreatedAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -102,6 +113,42 @@ class Article
             // Convertir l'objet en châine de caractères 
             public function __toString() {
                 return $this->title;
+            }
+
+            public function getImage(): ?string
+            {
+                return $this->image;
+            }
+
+            public function setImage(string $image): static
+            {
+                $this->image = $image;
+
+                return $this;
+            }
+
+            public function getSlug(): ?string
+            {
+                return $this->slug;
+            }
+
+            public function setSlug(string $slug): static
+            {
+                $this->slug = $slug;
+
+                return $this;
+            }
+
+            public function getCreatedAt(): ?\DateTimeImmutable
+            {
+                return $this->CreatedAt;
+            }
+
+            public function setCreatedAt(\DateTimeImmutable $CreatedAt): static
+            {
+                $this->CreatedAt = $CreatedAt;
+
+                return $this;
             }
 
 }
