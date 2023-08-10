@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category index
+{% endblock %}
+
+{% block body %}
+	<style>
+		.styled-title {
+			font-family: 'Poppins', sans-serif;
+			font-size: 175px;
+			text-align: center;
+			font-weight: 900;
+			/* background-clip: border-box; */
+			background-image: url("../uploads/sea.jpg");
+			/* -webkit-text-fill-color: transparent; */
+			-webkit-background-clip: text;
+		}
+	</style>
+	<h1 class="styled-title fit-content">CATÉGORIES</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categories %}
+				<tr>
+					<td>{{ category.id }}</td>
+					<td>{{ category.name }}</td>
+					<td>
+						<a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

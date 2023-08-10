@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Article index
+{% endblock %}
+
+{% block body %}
+	<h1 class="mt-2">Admin Article index</h1>
+
+{% include "include/allArticles.html.twig" %}
+
+	<a href="{{ path('app_admin_article_new') }}">Create new</a>
+{% endblock %}

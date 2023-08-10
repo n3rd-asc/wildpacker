@@ -1,0 +1,42 @@
+{# article/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ article.title }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ article.content }}</td>
+            </tr>
+            <tr>
+                <th>Written by (ne pas mettre le mail // Pas RGPD) :</th>
+                <td>{{ article.user }}</td>
+            </tr>
+            <tr>
+                <th>Categories:</th>
+                <td>
+                    {% for category in article.category %}
+                        {{ category.name }}
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_article_index') }}">back to list</a>
+
+{% endblock %}

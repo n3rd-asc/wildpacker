@@ -1,0 +1,38 @@
+{# ARTICLE TEMPLATE #}
+
+<h1 class="text-center py-5">Article récents :</h1>
+
+<div class="container-fluid">
+	<div class="row">
+		{% for article in articles %}
+			<div class="col-lg-3 col-md-6 col-sm-12">
+				<div class="card mb-3" style="w-100;">
+					<img src="\uploads\desert.jpg" class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">{{ article.title }}</h5>
+						<p class="card-text">{{ article.content }}</p>
+						<p class="card-text">Author:
+							{{ article.user }}</p>
+						<p class="card-text">Categories:
+							{% for category in article.category %}
+								{{ category.name }}
+								{% if not loop.last %},
+								{% endif %}
+							{% endfor %}
+						</p>
+						<a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Show</a>
+						<a href="{{ path('app_admin_article_edit', {'id': article.id}) }}" class="btn btn-primary">Edit</a>
+					</div>
+					<div
+						class="card-footer">
+						{# Ici ajouter {{ article.createdAt }} #}
+						<small class="text-muted">ici : Date de création de l'article</small>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<p>No records found</p>
+		{% endfor %}
+	</div>
+	<a href="{{ path('app_article_new') }}" class="btn btn-primary">Create new</a>
+</div>
