@@ -16,8 +16,7 @@ class Article1Type extends AbstractType
             ->add('content')
             ->add('slug')
             ->add('image')
-            ->add('category')
-        ;
+            ->add('category');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
