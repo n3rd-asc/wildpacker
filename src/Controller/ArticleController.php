@@ -49,7 +49,7 @@ class ArticleController extends AbstractController
             if ($image) {
 
 
-                $newFilename = $picturesService->add($image);
+                $newFilename = $picturesService->add($image, width: 400, height: 400);
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $article->setImage($newFilename);

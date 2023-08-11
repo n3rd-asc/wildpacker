@@ -7,7 +7,7 @@
 	<style>
 		.styled-title {
 			font-family: 'Poppins', sans-serif;
-			font-size: 4vw;
+			font-size: 2.5vw;
 			text-align: center;
 			font-weight: 900;
 			/* background-clip: border-box; */
@@ -37,7 +37,7 @@
 
 				<tr>
 					<td>{{ user.id }}</td>
-					<td><img src="{{ asset('uploads/' ~ user.avatar) }}" class="" alt="..." width="80" height="80"></td>
+					<td><img src="{{ asset('uploads/' ~ user.avatar) }}" class="object-fit-cover" alt="User Profile Picture" width="80" height="80"></td>
 					<td>{{ user.lastname }}</td>
 					<td>{{ user.firstname }}</td>
 					<td>{{ user.email }}</td>

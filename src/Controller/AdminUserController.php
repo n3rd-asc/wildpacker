@@ -25,7 +25,7 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, PicturesService $picturesService ): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, PicturesService $picturesService): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -36,22 +36,22 @@ class AdminUserController extends AbstractController
             // Récupérer le mot de passe en clair depuis le formulaire de création d'un utilisateur
             $plainPassword = $form->get('PlainPassword')->getData();
             // hasher le mot de passe
-        $hashedPassword = $passwordHasher->hashPassword(
-            $user,
-            $plainPassword
-        );
-        $user->setPassword($hashedPassword);
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $plainPassword
+            );
+            $user->setPassword($hashedPassword);
 
-        if ($image) {
+            if ($image) {
 
 
-            $newFilename = $picturesService->add($image);
-            // updates the 'brochureFilename' property to store the PDF file name
-            // instead of its contents
-            $user->setAvatar($newFilename);
-            // ... persist the $product variable or any other work
+                $newFilename = $picturesService->add($image);
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $user->setAvatar($newFilename);
+                // ... persist the $product variable or any other work
 
-        }
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -74,21 +74,33 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, PicturesService $picturesService): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('avatar')->getData();
             // Récupérer le mot de passe en clair depuis le formulaire de création d'un utilisateur
             $plainPassword = $form->get('PlainPassword')->getData();
             // hasher le mot de passe
-        $hashedPassword = $passwordHasher->hashPassword(
-            $user,
-            $plainPassword
-        );
-        $user->setPassword($hashedPassword);
-        
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $plainPassword
+            );
+            $user->setPassword($hashedPassword);
+
+            if ($image) {
+
+
+                $newFilename = $picturesService->add($image);
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $user->setAvatar($newFilename);
+                // ... persist the $product variable or any other work
+
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
@@ -103,7 +115,7 @@ class AdminUserController extends AbstractController
     #[Route('/{id}', name: 'app_admin_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }

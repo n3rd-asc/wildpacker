@@ -18,10 +18,10 @@
 					class="card mb-3" style="w-100;">
 					{# Article Image #}
 					<a href="{{ path('app_article_show', {'id': article.id}) }}">
-					<img src="..\..\..\uploads\{{ article.image }}" class="card-img-top object-fit-none" alt="..." width="250" height="250">
+					<img src="{{ asset('uploads/mini/400x400-' ~ article.image) }}" class="card-img-top" alt="...">
 					</a>
 					<div class="card-body">
-						<h5 class="card-title">{{ article.title }}</h5>
+						<h5 class="card-title text-uppercase">{{ article.title }}</h5>
 						<p class="card-text">{{ article.content }}</p>
 						{# User Avatar  #}
 						<img src="..\..\..\uploads\{{ article.user.avatar }}" class="" alt="..." width="50" height="50">
