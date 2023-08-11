@@ -1,41 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}User index
+{% endblock %}
 
 {% block body %}
-    <h1>Admin User index</h1>
+	<style>
+		.styled-title {
+			font-family: 'Poppins', sans-serif;
+			font-size: 4vw;
+			text-align: center;
+			font-weight: 900;
+			/* background-clip: border-box; */
+			/* background-image: url("../uploads/sea.jpg"); */
+			/* -webkit-text-fill-color: transparent; */
+			/* -webkit-background-clip: text; */
+		}
+	</style>
+	<h1 class="styled-title fit-content py-4">ADMIN USER INDEX</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Created at</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.CreatedAt.format('d/m/Y \\a\\t H:i:s a') }}</td>
-                <td>
-                    <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Avatar</th>
+				<th>Lastname</th>
+				<th>Firstname</th>
+				<th>Email</th>
+				<th>Roles</th>
+				{# <th>Password</th> #}
+				<th>Created at</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
 
-    <a href="{{ path('app_admin_user_new') }}">Create new</a>
+				<tr>
+					<td>{{ user.id }}</td>
+					<td><img src="..\..\..\uploads\{{ user.avatar }}" class="" alt="..." width="80" height="80"></td>
+					<td>{{ user.lastname }}</td>
+					<td>{{ user.firstname }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+					{# <td>{{ user.password }}</td> #}
+					<td>{{ user.CreatedAt.format('d/m/Y \\a\\t H:i:s a') }}</td>
+					<td>
+						<a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
+						<a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="" href="{{ path('app_admin_user_new') }}">Create new user</a>
 {% endblock %}

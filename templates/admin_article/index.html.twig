@@ -1,12 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin Article index
+{% block title %}ADMIN ARTICLE INDEX
 {% endblock %}
 
 {% block body %}
-	<h1 class="mt-2">Admin Article index</h1>
+	<style>
+		.styled-title {
+			font-family: 'Poppins', sans-serif;
+			font-size: 4vw;
+			text-align: center;
+			font-weight: 900;
+			/* background-clip: border-box; */
+			/* background-image: url("../uploads/sea.jpg"); */
+			/* -webkit-text-fill-color: transparent; */
+			/* -webkit-background-clip: text; */
+		}
+	</style>
+	<h1 class="styled-title fit-content pt-4 pb-3">ADMIN ARTICLE INDEX</h1>
 
-{% include "include/allArticles.html.twig" %}
+	{% include "include/allArticles.html.twig" %}
 
 	<a href="{{ path('app_admin_article_new') }}">Create new</a>
 {% endblock %}

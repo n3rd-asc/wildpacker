@@ -6,21 +6,21 @@
 {% block body %}
 	{# ARTICLE TEMPLATE #}
 	{# <h1 class="mt-2">
-					Article index</h1> #}
+								Article index</h1> #}
 
 		<style>
 .styled-title {
 	font-family: 'Poppins', sans-serif;
-	font-size: 175px;
+	font-size: 4vw;
 	text-align: center;
 	font-weight: 900;
 	/* background-clip: border-box; */
-	background-image: url("../uploads/sea.jpg");
+	/* background-image: url("../uploads/sea.jpg"); */
 	/* -webkit-text-fill-color: transparent; */
-	-webkit-background-clip: text;
+	/* -webkit-background-clip: text; */
 }
 	</style>
-		<h1 class="styled-title fit-content"> ARTICLES</h1>
+		<h1 class="styled-title fit-content py-4"> ARTICLES</h1>
 
 	{# <h1 class="text-center py-5">Article récents :</h1> #}
 
@@ -28,38 +28,40 @@
 		<div class="row">
 			{% for article in articles %}
 				<div class="col-lg-3 col-md-6 col-sm-12">
-					<div class="card mb-3" style="w-100;">
-						<img src="..\uploads\{{ article.image }}" class="card-img-top object-fit-none" alt="..." width="250" height="250">
+					<div
+						class="card mb-3" style="w-100;">
+						{# Article Image #}
+						<a href="{{ path('app_article_show', {'id': article.id}) }}">
+							<img src="..\..\..\uploads\{{ article.image }}" class="card-img-top object-fit-none" alt="..." width="250" height="250">
+						</a>
 						<div class="card-body">
 							<h5 class="card-title">{{ article.title }}</h5>
-							
-							{# TEST D UPLOAD IMAGE #}
-							<h5 class="card-title">{{ article.image }}</h5>
-
 							<p class="card-text">{{ article.content }}</p>
-							<p class="card-text">Author:
-								{{ article.user }}</p>
-							<p class="card-text">Categories:
-								{% for category in article.category %}
-									{{ category.name }}
-									{% if not loop.last %},
-									{% endif %}
-								{% endfor %}
-							</p>
-							<a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Show</a>
-						</div>
-						<div
-							class="card-footer">
-							<small class="text-muted">Written on : {{ article.CreatedAt.format('d/m/Y \\a\\t H:i:s a') }}</small>
+							{# User Avatar  #}
+							<img src="..\..\..\uploads\{{ article.user.avatar }}" class="" alt="..." width="50" height="50">
+							<a class="card-text" href="{{ path('app_admin_user_show', {'id': article.user.id }) }}">Author :
+								{{ article.user.lastname }}
+								{{ article.user.firstname }}</a>
+						</p>
+						<p class="card-text">Categories:
+							{% for category in article.category %}
+								<a class="card-text" href="{{ path('app_category_show', {'id': category.id }) }}">{{ category.name }}</a>
+								{% if not loop.last %},
+								{% endif %}
+							{% endfor %}
+						</p>
+						<a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Show</a>
+					</div>
+					<div class="card-footer">
+						<small class="text-muted">Written on :
+							{{ article.CreatedAt.format('d/m/Y \\a\\t H:i:s a') }}</small>
 
-						</div>
 					</div>
 				</div>
-			{% else %}
-				<p>No records found</p>
-			{% endfor %}
-		</div>
-		<a href="{{ path('app_article_new') }}" class="btn btn-primary">Create new</a>
+			</div>
+		{% else %}
+			<p>No records found</p>
+		{% endfor %}
 	</div>
-
-{% endblock %}
+	<a href="{{ path('app_article_new') }}" class="btn btn-primary">Create new</a>
+</div>{% endblock %}
