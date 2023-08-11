@@ -10,23 +10,30 @@
 
 	{# <h1 id="articles-anchor" class="text-center my-5 text-uppercase">Article récents :</h1> #}
 
-		<div class="container-fluid my-4"> <div class="row">
-			{% for article in articles %}
-				<div class="col-lg-3 col-md-6 col-sm-12">
-					<div class="card mb-3" style="w-100;">
-						<img src="uploads/mountains.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">{{ article.title }}</h5>
-							<p class="card-text">{{ article.content }}</p>
-							<p class="card-text">Author:
-								{{ article.user }}</p>
-							<p class="card-text">Categories:
-								{% for category in article.category %}
-									{{ category.name }}
-									{% if not loop.last %},
-									{% endif %}
-								{% endfor %}
-							</p>
+		<div class="container-fluid my-4">
+	<div class="row">
+		{% for article in articles %}
+			<div class="col-lg-3 col-md-6 col-sm-12">
+				<div
+					class="card mb-3" style="w-100;">
+					{# Article Image #}
+					<a href="{{ path('app_article_show', {'id': article.id}) }}">
+					<img src="..\..\..\uploads\{{ article.image }}" class="card-img-top object-fit-none" alt="..." width="250" height="250">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title">{{ article.title }}</h5>
+						<p class="card-text">{{ article.content }}</p>
+						{# User Avatar  #}
+						<img src="..\..\..\uploads\{{ article.user.avatar }}" class="" alt="..." width="50" height="50">
+						<a class="card-text" href="{{ path('app_admin_user_show', {'id': article.user.id }) }}">Author : {{ article.user.lastname }} {{ article.user.firstname }}</a>
+					</p>
+					<p class="card-text">Categories:
+						{% for category in article.category %}
+						<a class="card-text" href="{{ path('app_category_show', {'id': category.id }) }}">{{ category.name }}</a>
+							{% if not loop.last %},
+							{% endif %}
+						{% endfor %}
+					</p>
 							<a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary">Show</a>
 						</div>
 						<div class="card-footer">
