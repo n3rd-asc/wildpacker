@@ -37,7 +37,7 @@
 
 				<tr>
 					<td>{{ user.id }}</td>
-					<td><img src="..\..\..\uploads\{{ user.avatar }}" class="" alt="..." width="80" height="80"></td>
+					<td><img src="{{ asset('uploads/' ~ user.avatar) }}" class="" alt="..." width="80" height="80"></td>
 					<td>{{ user.lastname }}</td>
 					<td>{{ user.firstname }}</td>
 					<td>{{ user.email }}</td>

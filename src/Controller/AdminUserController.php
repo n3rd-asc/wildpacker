@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\PicturesService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,13 +25,14 @@ class AdminUserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, PicturesService $picturesService ): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('avatar')->getData();
             // Récupérer le mot de passe en clair depuis le formulaire de création d'un utilisateur
             $plainPassword = $form->get('PlainPassword')->getData();
             // hasher le mot de passe
@@ -39,6 +41,17 @@ class AdminUserController extends AbstractController
             $plainPassword
         );
         $user->setPassword($hashedPassword);
+
+        if ($image) {
+
+
+            $newFilename = $picturesService->add($image);
+            // updates the 'brochureFilename' property to store the PDF file name
+            // instead of its contents
+            $user->setAvatar($newFilename);
+            // ... persist the $product variable or any other work
+
+        }
 
             $entityManager->persist($user);
             $entityManager->flush();
